@@ -26,13 +26,15 @@
 ## 設定檔語法概說
 會說概說的原因是因為我還真不知道還有多少語法...
 * \# 只要是 \# 開頭的都是註解
-* 標籤(<>)是可以巢狀設定的
+* 標籤(<>)除少數例外，是可以巢狀設定的
 * 後面的設定會覆寫前面的設定
 
 ## 常見指令
 * Define  
 定義變數  
-只要上面有 `Define {變數名稱} {變數值}` 就可以把 `${{變數名稱}}` 視為 `{變數值}` 使用
+只要上面有 `Define {變數名稱} {變數值}` 就可以把 `${{變數名稱}}` 視為 `{變數值}` 使用  
+同時也可以使用 IfDefine 標籤判斷該變數是否已被定義  
+> 官方警告，變數名稱不可有 ":" 避免跟 RewriteMap 的語法衝突
 * ServerRoot  
 最根本的路徑，所有設定的路徑都從這裡(通常是主資料夾的路徑)
 * Listen  
@@ -48,4 +50,44 @@
 * ServerAdmin  
 這伺服器的管理者信箱
 * ServerName  
+主機名稱  
 當使用者輸入此網址時，提供服務(主要在 VirtualHost 標籤中會特別需要)
+* ServerAlias  
+主機名稱別名  
+> 通常使用萬用字元時使用
+* AllowOverride (只在 Directory 標籤內有效)  
+是否啟用 .htaccess 以及允許執行的項目類型(新版本 Apache 預設為 None 實務上常設定為 All)
+* ErrorLog  
+錯誤日誌  
+設定錯誤日誌的路徑，如果是相對路徑，則會與 ServerRoot 組合  
+如果使用 pipe (|) 開頭，則會將錯誤訊息寫入該命令中
+* Include  
+載入其他設定檔  
+如果該設定檔可能不存在，則建議使用 IncludeOptional 指令
+* Options  
+目錄選項  
+通常建議設定為 +FollowSymLinks -Indexes +ExecCGI
+* ServerTokens  
+回應相關設定的訊息  
+一般建議設定為 Prod 避免透漏過多版本訊息，但其他人仍可透過其他方式知道相關訊息
+
+
+## 常見標籤
+* Directory  
+目錄設定  
+設定目錄相關設定，可使用 regex
+> 特例： <Directory "/"> 表示所有透過 Apache 讀取的資料，強烈建議設定  
+> AllowOverride none  
+> Require all denied  
+* DocumentRoot  
+網站根目錄  
+所有 URI 皆會從此處讀取  
+如果是相對路徑，則會與 ServerRoot 組合
+* Files  
+檔案設定  
+設定檔案相關設定，可使用 regex
+* IfModule
+判斷是否有載入對應的模組
+可以使用 identifier (ex. rewrite_module) 或 file (ex. mod_rewrite.c)
+* VirtualHost  
+虛擬主機設定
