@@ -2,6 +2,10 @@
 > 怕我自己忘記
 歡迎大家分享
 
+## SSL
+1. [Get HTTPS for free!](https://gethttpsforfree.com/)  
+Web 端更新 Let's Encrypt
+
 ## 線上測試
 
 ### PHP
