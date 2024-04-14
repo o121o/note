@@ -20,3 +20,6 @@ Web 端更新 Let's Encrypt
 1. [Cloudflare R2](https://www.cloudflare.com/zh-tw/products/r2/)
 一個以操作次數為主的計費方式
 
+### 圖片去雜訊
+1. [Cleanup.pictures](https://cleanup.pictures/)
+
